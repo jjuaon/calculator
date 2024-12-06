@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1732976636" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/seven_seg_display.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1733468404" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/seven_seg_display.dcp">
   <File Type="PA-TCL" Name="test_display.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="test_display_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="test_display_reports.tcl"/>
@@ -18,7 +18,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/displayDec.v">
+    <File Path="$PSRCDIR/sources_1/new/display.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
@@ -40,6 +40,24 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/slidedisplay.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/AGE.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/top.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/unit_conv.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
@@ -50,17 +68,7 @@
         <Attr Name="AutoDisabled" Val="1"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/display.v">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-      </FileInfo>
-    </File>
     <File Path="$PSRCDIR/sources_1/new/CALC.v">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/top.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
       </FileInfo>
