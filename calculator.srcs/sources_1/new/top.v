@@ -1,5 +1,6 @@
 `timescale 1ns / 1ps
 
+
 module main(
     input clk,              // Clock input
     input btnL,             // Left button to navigate left
@@ -7,7 +8,8 @@ module main(
     input btnC,             // Center button to select mode
     output reg [6:0] seg,   // Segments for 7-segment display
     output reg [3:0] an,     // Enable signals for 4-digit display
-    output reg [15:0] led
+    output reg [15:0] led,
+    output reg [2:0] mode
 );
     reg [2:0] state = 3'b000;  // State for text selection (0 to 5)
     reg [1:0] digit_select = 2'b00;  // To cycle through 4 digits
@@ -19,7 +21,7 @@ module main(
     reg btnL_prev = 0, btnR_prev = 0, btnC_prev = 0;
     reg [31:0] btnC_counter = 0; // Counter to track button press duration
     reg btnC_state = 0; // State to track if btnC is pressed
-
+    
     // State control for buttons
     always @(posedge clk) begin
         // Debounce buttons
@@ -52,26 +54,7 @@ module main(
 
         // On btnC press, trigger action based on selected mode (not including the reset condition)
         if (btnC && !btnC_prev && btnC_state == 0) begin
-            case (state)
-                3'b001: begin 
-                //call calc module
-                    led[0] <= 1;
-                end
-                3'b010: begin 
-                    led[0] <= 0;
-                end
-                3'b011: begin
-                    led[0] <= 1;
-                end
-                3'b100: begin
-                    led[0] <= 0;
-                end
-                3'b101: begin
-                    led[0] <= 1;
-                end
-                default: begin
-                end
-            endcase
+                mode = state;
         end 
 
         btnL_prev <= btnL;
