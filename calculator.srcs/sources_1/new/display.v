@@ -163,11 +163,6 @@ module displayDec(
                 led <= 16'b1111111111111111;
             end
         endcase
-
-        // Clear LEDs for the current index range
-//        for (i = bindex; i <= findex; i = i + 1) begin
-//            led[i] <= 1'b0;
-//        end
     end
 
     // Refresh counter for digit multiplexing
