@@ -14,7 +14,7 @@ module main(
     reg [6:0] char_map [3:0];       // Array to hold patterns for the current text
     wire refresh_clk;               // Slower clock for refreshing 7-segment
     SegRefreshRate refresher (clk, refresh_clk); // Use refresh clock
-    
+   
     // Button debounce registers
     reg btnL_prev = 0, btnR_prev = 0, btnC_prev = 0;
     reg [31:0] btnC_counter = 0; // Counter to track button press duration

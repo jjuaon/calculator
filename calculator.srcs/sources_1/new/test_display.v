@@ -50,5 +50,5 @@ module test_display(
     assign bDot = {1'b0,28'd1256};
     assign aDot = 8'd25;
 //    displayBin(clk, btnL, btnR, bDot, aDot, flag, seg, an, led);
-    displayDec(clk, btnL, btnR, bDot, aDot, seg, an, led);
+    SevenSegmentSlide(clk, btnL, btnR, bDot, aDot, seg, an, led);
 endmodule

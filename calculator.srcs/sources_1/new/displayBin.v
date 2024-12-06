@@ -1,62 +1,39 @@
 `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 11/29/2024 02:56:48 PM
+// Design Name: 
+// Module Name: display
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-module displayDec(
+module displayBin(
     input clk, btnL, btnR,                
     input [28:0] bDot,         
     input [7:0] aDot,          
     output reg [6:0] seg,      
     output reg [3:0] an,      
-    output reg [15:0] led,
-    output reg dp,
+    output reg [15:0] led
 );
-    wire rr;               // Refresh rate signal for multiplexing
+    wire rr;                   // Refresh rate signal for multiplexing
     reg [3:0] refresh_counter; // Counter for digit multiplexing
     reg [3:0] digit_value;     // Current digit to display
-    wire [31:0] bDot_BCD, [7:0] aDot_BCD, [3:0] Unit;
-    wire sign;
-    reg [3:0] index;
-    reg [15:0] dp_value;
-    wire [3:0] findex, [3:0] bindex;
-    
+
     // Instantiate refresh rate generator (assumed module provided)
     SegRefreshRate refresh_rate_gen(clk, rr);
-    BCD_UNIT(bDot,aDot,sign,bDot_BCD,aDot_BCD, Unit);
-    
-    always @(index) begin
-        findex = 4 * index + 3;
-        bindex = 4 * index;
-  
-        case(index)
-            4'b0: begin
-                dp_value <= {
-                       sign ? ((Unit > index+3)? bDot_BCD[findex+4:bindex+4]:4'b1110): (bDot_BCD[findex+4:bindex+4]),
-                       bDot_BCD[3:0],
-                       aDot_BCD[7:4],
-                       aDot_BCD[3:0]
-                }
-            end
-            
-            4'b0001: begin
-                dp_value <= {
-                       sign ? ((Unit > index+3)? bDot_BCD[findex+4:bindex+4]:4'b1110): (bDot_BCD[findex+4:bindex+4]),
-                       bDot_BCD[7:4],
-                       bDot_BCD[3:0],
-                       aDot_BCD[7:4]
-                }     
-            end
- 
-            default: begin
-                dp_value <= {
-                       sign ? ((Unit > index+3)? bDot_BCD[findex+4:bindex+4]:4'b1110): (bDot_BCD[findex+4:bindex+4]),
-                       bDot_BCD[findex:bindex],
-                       bDot_BCD[findex-4:bindex-4],
-                       bDot_BCD[findex-8:bindex-8]
-                }
-            end
-        endcase
-    end
-    
-    
+
     // Refresh counter for digit multiplexing
     always @(posedge rr) begin
         refresh_counter <= (refresh_counter == 4'b0011) ? 4'b0000 : refresh_counter + 1; // Loop through 4 digits
@@ -64,27 +41,23 @@ module displayDec(
 
     // Select the current digit to display
     always @(refresh_counter) begin
-            dp <= 0;
             // Display only the last 4 bits of bDot
             case (refresh_counter)
                 4'b0000: begin
-                    digit_value <= dp_value[0];
+                    digit_value <= bDot[0];
                     an <= 4'b1110; // Activate first digit
                 end
                 4'b0001: begin
-                    digit_value <= dp_value[1];
+                    digit_value <= bDot[1];
                     an <= 4'b1101; // Activate second digit
                 end
                 4'b0010: begin
-                    digit_value <= dp_value[2];
+                    digit_value <= bDot[2];
                     an <= 4'b1011; // Activate third digit
-                    index == 4'b0000 ? dp <= 1: dp <= 0;
                 end
                 4'b0011: begin
-                    digit_value <= dp_value[3];
+                    digit_value <= bDot[3];
                     an <= 4'b0111; // Activate fourth digit
-                    index == 4'b0001 ? dp <= 1: dp <= 0;
-
                 end
                 default: begin
                     digit_value <= 4'b0000; // Default blank
@@ -106,8 +79,7 @@ module displayDec(
             4'b0111: seg <= 7'b1111000; // 7
             4'b1000: seg <= 7'b0000000; // 8
             4'b1001: seg <= 7'b0010000; // 9
-            4'b1110: seg <= 7'b0111111; // -
-            default: seg <= 7'b0000110; // Error
+            default: seg <= 7'b1111111; // Blank
         endcase
     end
 
