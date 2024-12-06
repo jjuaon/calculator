@@ -1,15 +1,13 @@
 `timescale 1ns / 1ps
 
-module displayDec (
-    input clk, 
-    input btnL, 
-    input btnR,                // Buttons for navigation
-    input [28:0] bDot,         // Binary input for bDot
-    input [7:0] aDot,          // Binary input for aDot
-    output reg [6:0] seg,      // 7-segment display segments
-    output reg [3:0] an,       // 7-segment display anodes
-    output reg [15:0] led,     // Debug LEDs
-    output reg dp              // Decimal point
+module displayDec(
+    input clk, btnL, btnR,             // Clock and buttons for navigation
+    input [28:0] bDot,                 // Binary input for bDot
+    input [7:0] aDot,                  // Binary input for aDot
+    output reg [6:0] seg,              // 7-segment display segments
+    output reg [3:0] an,               // 7-segment display anodes
+    output reg [15:0] led,             // Debug LEDs
+    output reg dp                      // Decimal point
 );
     wire rr;                           // Refresh rate signal
     reg [3:0] refresh_counter;         // Counter for digit multiplexing
