@@ -19,7 +19,10 @@ module displayDec(
     reg [3:0] index = 4'b0;            // Current index for sliding
     reg [15:0] dp_value;               // Value including the decimal point
     integer i;                         // Loop variable
-//    reg [7:0] findex, bindex;
+    
+    reg [17:0] debounce;      // Debounce counter
+    reg btnL_prev, btnR_prev;
+    //    reg [7:0] findex, bindex;
     // Instantiate refresh rate generator
     SegRefreshRate refresh_rate_gen (
         .clk(clk),
@@ -36,6 +39,7 @@ module displayDec(
         .Unit(Unit)
     );
 
+
     // Initialize LEDs and populate initial values
     initial begin
         led = 16'b0;
@@ -44,18 +48,32 @@ module displayDec(
         end
     end
 
-    // Handle sliding window logic for `index`
     always @(posedge clk) begin
-        if (btnL && index > 0) begin
-            index <= index - 1; // Slide left
-        end else if (btnR && index < (Unit - 1)) begin
-            index <= index + 1; // Slide right
+        if (debounce == 0) begin
+            if (btnL && !btnL_prev) begin
+                if (index < (Unit - 3)) begin // Ensure index does not exceed upper bound
+                    index <= index + 1;
+                end
+            end
+
+            if (btnR && !btnR_prev) begin
+                if (index > 0) begin // Ensure index does not go below lower bound
+                    index <= index - 1;
+                end
+            end
+
+            btnL_prev <= btnL;
+            btnR_prev <= btnR;
         end
     end
 
     // Calculate `dp_value` based on the current index
     always @(*) begin
-
+        if (sign) begin
+            led <= (1 << (Unit+1)) - 1;
+        end else begin
+            led <= (1 << Unit) - 1;
+        end
         // Populate `dp_value` for display based on the sliding window
         case (index)
             4'b0000: begin
@@ -65,24 +83,84 @@ module displayDec(
                     aDot_BCD[7:4],
                     aDot_BCD[3:0]
                 };
+                led[3:0] <= 4'b0000;
+
             end
+
             4'b0001: begin
                 dp_value <= {
-                    sign ? ((Unit > index + 3) ? bDot_BCD[8:5] : 4'b1110) : (bDot_BCD[8:5]),
+                    sign ? ((Unit > index + 3) ? bDot_BCD[11:8] : 4'b1110) : (bDot_BCD[11:8]),
                     bDot_BCD[7:4],
                     bDot_BCD[3:0],
                     aDot_BCD[7:4]
                 };
+                led[4:1] <= 4'b0000;
+
             end
-        
-   
-            default: begin
+            
+            4'b0010: begin
                 dp_value <= {
-                    sign ? ((Unit > index + 3) ? bDot_BCD[findex + 4 : bindex + 4] : 4'b1110) : (bDot_BCD[findex + 4 : bindex + 4]),
-                    bDot_BCD[findex : bindex],
-                    bDot_BCD[findex - 4 : bindex - 4],
-                    bDot_BCD[findex - 8 : bindex - 8]
+                    sign ? ((Unit > index + 3) ? bDot_BCD[15:12] : 4'b1110) : (bDot_BCD[15:12]),
+                    bDot_BCD[11:8],
+                    bDot_BCD[7:4],
+                    bDot_BCD[3:0]
                 };
+                led[5:2] <= 4'b0000;
+
+            end
+            4'b0011: begin
+                dp_value <= {
+                    sign ? ((Unit > index + 3) ? bDot_BCD[19:16] : 4'b1110) : (bDot_BCD[19:16]),
+                    bDot_BCD[15:12],
+                    bDot_BCD[11:8],
+                    bDot_BCD[7:4]
+                };
+                led[6:3] <= 4'b0000;
+            end
+            
+            4'b0100: begin
+                dp_value <= {
+                    sign ? ((Unit > index + 3) ? bDot_BCD[23:20] : 4'b1110) : (bDot_BCD[23:20]),
+                    bDot_BCD[19:16],
+                    bDot_BCD[15:12],
+                    bDot_BCD[11:8]
+                };
+                led[7:4] <= 4'b0000;
+            end
+
+            4'b0101: begin
+                dp_value <= {
+                    sign ? ((Unit > index + 3) ? bDot_BCD[27:24] : 4'b1110) : (bDot_BCD[27:24]),
+                    bDot_BCD[23:20],
+                    bDot_BCD[19:16],
+                    bDot_BCD[15:12]
+                };
+                led[8:5] <= 4'b0000;
+            end
+
+            4'b0110: begin
+                dp_value <= {
+                    sign ? ((Unit > index + 3) ? bDot_BCD[31:28] : 4'b1110) : (bDot_BCD[31:28]),
+                    bDot_BCD[27:24],
+                    bDot_BCD[23:20],
+                    bDot_BCD[19:16]
+                };
+                led[9:6] <= 4'b0000;
+            end
+
+            4'b0111: begin
+                dp_value <= {
+                    sign ? 4'b1110 : 4'b0000,
+                    bDot_BCD[31:28],
+                    bDot_BCD[27:24],
+                    bDot_BCD[23:20]
+                };
+                led[10:7] <= 4'b0000;
+            end
+
+            default: begin
+                dp_value <= {4'b1111,4'b1111,4'b1111,4'b1111};
+                led <= 16'b1111111111111111;
             end
         endcase
 
@@ -108,6 +186,8 @@ module displayDec(
             4'b0001: begin
                 digit_value <= dp_value[7:4];
                 an <= 4'b1101; // Activate second digit
+                if (index == 4'b0001) dp <= 1'b0; // Activate decimal point for the second index
+
             end
             4'b0010: begin
                 digit_value <= dp_value[11:8];
@@ -117,7 +197,6 @@ module displayDec(
             4'b0011: begin
                 digit_value <= dp_value[15:12];
                 an <= 4'b0111; // Activate fourth digit
-                if (index == 4'b0001) dp <= 1'b0; // Activate decimal point for the second index
             end
             default: begin
                 digit_value <= 4'b0000; // Default blank
@@ -140,7 +219,7 @@ module displayDec(
             4'b1000: seg <= 7'b0000000; // 8
             4'b1001: seg <= 7'b0010000; // 9
             4'b1110: seg <= 7'b0111111; // -
-            default: seg <= 7'b1111111; // Blank
+            default: seg <= 7'b0000110; // Blank
         endcase
     end
 

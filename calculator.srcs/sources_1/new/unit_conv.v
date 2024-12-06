@@ -1,6 +1,3 @@
-//boom
-`timescale 1ns/1ps  
-
 module Unit_Conversion_System(
     input clk,               // Clock input
     input btnC,              // Center button to proceed to the next step
@@ -98,16 +95,10 @@ module Unit_Conversion_Type_Display(
     always @(posedge refresh_clk) begin
         // Detect button press (edge detection)
         if (btnL && !btnL_prev) begin
-            type <= type - 1; // Cycle backward
+            type <= (type == 2'b00) ? 2'b10 : type - 1; // Cycle backward
         end else if (btnR && !btnR_prev) begin
-            type <= type + 1; // Cycle forward
+            type <= (type == 2'b10) ? 2'b00 : type + 1; // Cycle forward
         end
-
-        // Wrap the type around (cyclic behavior)
-        if (type > 2'b10)
-            type <= 2'b00;
-        else if (type < 2'b00)
-            type <= 2'b10;
 
         // Update previous button states
         btnL_prev <= btnL;
@@ -117,14 +108,14 @@ module Unit_Conversion_Type_Display(
     // Determine 7-segment data based on the type
     always @(*) begin
         // Default pattern for all digits
-        seg_data[0] = 7'b0000001; // "-" (Digit 1)
-        seg_data[1] = 7'b0000001; // "-" (Digit 2)
-        seg_data[2] = 7'b0000001; // "-" (Digit 3)
+        seg_data[0] = 7'b0111111; // "-" (Digit 1)
+        seg_data[1] = 7'b0111111; // "-" (Digit 2)
+        seg_data[2] = 7'b0111111; // "-" (Digit 3)
 
         case (type)
-            2'b00: seg_data[3] = 7'b0111001; // "M" for Mass
-            2'b01: seg_data[3] = 7'b0011100; // "L" for Length
-            2'b10: seg_data[3] = 7'b0111100; // "T" for Temperature
+            2'b00: seg_data[3] = 7'b0101010; // "M" for Mass
+            2'b01: seg_data[3] = 7'b1000111; // "L" for Length
+            2'b10: seg_data[3] = 7'b0000111; // "T" for Temperature
             default: seg_data[3] = 7'b0000000; // Blank
         endcase
     end
@@ -204,7 +195,7 @@ module Unit_Conversion_Input(
         digits[1] = 4'd0;
         digits[2] = 4'd0;
         digits[3] = 4'd0;
-        selected_digit = 2'd0;
+        selected_digit = 2'd0; // Start with digit1
     end
 
     // Button press logic
@@ -215,9 +206,9 @@ module Unit_Conversion_Input(
         end else if (btnD && !btnD_prev) begin
             digits[selected_digit] <= (digits[selected_digit] == 0) ? 9 : digits[selected_digit] - 1;
         end else if (btnL && !btnL_prev) begin
-            selected_digit <= (selected_digit == 0) ? 3 : selected_digit - 1;
+            selected_digit <= (selected_digit == 3) ? 0 : selected_digit + 1; // Move left
         end else if (btnR && !btnR_prev) begin
-            selected_digit <= (selected_digit == 3) ? 0 : selected_digit + 1;
+            selected_digit <= (selected_digit == 0) ? 3 : selected_digit - 1; // Move right
         end
 
         // Update previous button states
