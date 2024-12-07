@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module displayDec(
-    input clk, btnL, btnR,             // Clock and buttons for navigation
+    input clk, rr, btnL, btnR,             // Clock and buttons for navigation
     input [28:0] bDot,                 // Binary input for bDot
     input [7:0] aDot,                  // Binary input for aDot
     output reg [6:0] seg,              // 7-segment display segments
@@ -9,7 +9,6 @@ module displayDec(
     output reg [15:0] led,             // Debug LEDs
     output reg dp                      // Decimal point
 );
-    wire rr;                           // Refresh rate signal
     reg [3:0] refresh_counter;         // Counter for digit multiplexing
     reg [3:0] digit_value;             // Current digit to display
     wire [31:0] bDot_BCD;              // BCD representation of bDot
@@ -22,14 +21,7 @@ module displayDec(
     
     reg [17:0] debounce;      // Debounce counter
     reg btnL_prev, btnR_prev;
-    //    reg [7:0] findex, bindex;
-    // Instantiate refresh rate generator
-    SegRefreshRate refresh_rate_gen (
-        .clk(clk),
-        .clk_out(rr)
-    );
 
-    // Instantiate BCD_UNIT for binary to BCD conversion
     BCD_UNIT bcd_unit_inst (
         .bDot(bDot),
         .aDot(aDot),
@@ -39,8 +31,6 @@ module displayDec(
         .Unit(Unit)
     );
 
-
-    // Initialize LEDs and populate initial values
     initial begin
         led = 16'b0;
         for (i = 0; i < 16; i = i + 1) begin
@@ -67,14 +57,13 @@ module displayDec(
         end
     end
 
-    // Calculate `dp_value` based on the current index
-    always @(*) begin
+    always @(index) begin
         if (sign) begin
             led <= (1 << (Unit+1)) - 1;
         end else begin
             led <= (1 << Unit) - 1;
         end
-        // Populate `dp_value` for display based on the sliding window
+
         case (index)
             4'b0000: begin
                 dp_value <= {
@@ -165,12 +154,10 @@ module displayDec(
         endcase
     end
 
-    // Refresh counter for digit multiplexing
     always @(posedge rr) begin
         refresh_counter <= (refresh_counter == 4'b0011) ? 4'b0000 : refresh_counter + 1; // Loop through 4 digits
     end
 
-    // Select the current digit to display and handle the decimal point
     always @(*) begin
         dp <= 1'b1; // Default decimal point off
         case (refresh_counter)
@@ -200,7 +187,6 @@ module displayDec(
         endcase
     end
 
-    // 7-segment encoding for the current digit
     always @(*) begin
         case (digit_value)
             4'b0000: seg <= 7'b1000000; // 0
