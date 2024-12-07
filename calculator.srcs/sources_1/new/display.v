@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module displayDec(
-    input clk, rr, btnL, btnR,             // Clock and buttons for navigation
+    input dpFlag, clk, rr, btnL, btnR,             // Clock and buttons for navigation
     input [28:0] bDot,                 // Binary input for bDot
     input [7:0] aDot,                  // Binary input for aDot
     output reg [6:0] seg,              // 7-segment display segments
