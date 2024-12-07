@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/sosolitary/.Xilinx/calculator/calculator.runs/synth_1/test_display.tcl"
+  variable script "C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.runs/synth_1/top.tcl"
   variable category "vivado_synth"
 }
 
@@ -56,29 +56,25 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
-set_param xicom.use_bs_reader 1
-set_msg_config -id {HDL 9-1061} -limit 100000
-set_msg_config -id {HDL 9-1654} -limit 100000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Users/sosolitary/.Xilinx/calculator/calculator.cache/wt [current_project]
-set_property parent.project_path C:/Users/sosolitary/.Xilinx/calculator/calculator.xpr [current_project]
+set_property webtalk.parent_dir C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.cache/wt [current_project]
+set_property parent.project_path C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo c:/Users/sosolitary/.Xilinx/calculator/calculator.cache/ip [current_project]
+set_property ip_output_repo c:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/BCD_UNIT.v
-  C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v
-  C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/refreshrate.v
-  C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/test_display.v
+  C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/display.v
+  C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/main.v
+  C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/refreshrate.v
+  C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/top.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -89,16 +85,16 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/sosolitary/.Xilinx/calculator/basys_calculator_proj.xdc
-set_property used_in_implementation false [get_files C:/Users/sosolitary/.Xilinx/calculator/basys_calculator_proj.xdc]
+read_xdc C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/basys_calculator_proj.xdc
+set_property used_in_implementation false [get_files C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/basys_calculator_proj.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/utils_1/imports/synth_1/seven_seg_display.dcp
+read_checkpoint -auto_incremental -incremental C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/utils_1/imports/synth_1/seven_seg_display.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top test_display -part xc7a35tcpg236-1
+synth_design -top top -part xc7a35tcpg236-1
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"
@@ -108,10 +104,10 @@ if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
 OPTRACE "write_checkpoint" START { CHECKPOINT }
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
-write_checkpoint -force -noxdef test_display.dcp
+write_checkpoint -force -noxdef top.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
-generate_parallel_reports -reports { "report_utilization -file test_display_utilization_synth.rpt -pb test_display_utilization_synth.pb"  } 
+generate_parallel_reports -reports { "report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb"  } 
 OPTRACE "synth reports" END { }
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]
