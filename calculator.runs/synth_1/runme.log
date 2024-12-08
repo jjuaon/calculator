@@ -8,14 +8,14 @@
   **** SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
   **** IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
   **** SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-  **** Start of session at: Sat Dec  7 13:18:12 2024
+  **** Start of session at: Mon Dec  9 05:50:09 2024
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source top.tcl -notrace
-create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:11 . Memory (MB): peak = 531.867 ; gain = 202.625
-Command: read_checkpoint -auto_incremental -incremental C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/utils_1/imports/synth_1/seven_seg_display.dcp
-INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/utils_1/imports/synth_1/seven_seg_display.dcp for incremental synthesis
+create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 530.805 ; gain = 198.738
+Command: read_checkpoint -auto_incremental -incremental C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/utils_1/imports/synth_1/seven_seg_display.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/utils_1/imports/synth_1/seven_seg_display.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top top -part xc7a35tcpg236-1
 Starting synth_design
@@ -23,26 +23,717 @@ Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Device 21-9227] Part: xc7a35tcpg236-1 does not have CEAM library.
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 25236
+INFO: [Synth 8-7075] Helper process launched with PID 69244
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1381.887 ; gain = 447.426
+Starting RTL Elaboration : Time (s): cpu = 00:00:01 ; elapsed = 00:00:03 . Memory (MB): peak = 1384.582 ; gain = 449.188
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'top' [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/top.v:3]
-INFO: [Synth 8-6157] synthesizing module 'SegRefreshRate' [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/refreshrate.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'SegRefreshRate' (0#1) [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/refreshrate.v:3]
-INFO: [Synth 8-6157] synthesizing module 'main' [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/main.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'main' (0#1) [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/main.v:3]
-ERROR: [Synth 8-36] 'displayDec' is not declared [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/top.v:37]
-INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/top.v:35]
-ERROR: [Synth 8-6156] failed synthesizing module 'top' [C:/Users/ASUS/Documents/KMUTT/CPE/CPE222_Digital_Circuit/calculator/calculator.srcs/sources_1/new/top.v:3]
+INFO: [Synth 8-6157] synthesizing module 'top' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:2]
+INFO: [Synth 8-6157] synthesizing module 'SegRefreshRate' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/refreshrate.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'SegRefreshRate' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/refreshrate.v:3]
+INFO: [Synth 8-6157] synthesizing module 'main' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/mode_selector.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'main' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/mode_selector.v:3]
+INFO: [Synth 8-6157] synthesizing module 'BasicCalculator' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:26]
+INFO: [Synth 8-6157] synthesizing module 'button_debounce_calc' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'button_debounce_calc' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:4]
+INFO: [Synth 8-6157] synthesizing module 'displayDec' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:3]
+INFO: [Synth 8-6157] synthesizing module 'BCD_UNIT' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/BCD_UNIT.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'BCD_UNIT' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/BCD_UNIT.v:3]
+WARNING: [Synth 8-567] referenced signal 'sign' should be on the sensitivity list [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:60]
+WARNING: [Synth 8-567] referenced signal 'Unit' should be on the sensitivity list [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:60]
+WARNING: [Synth 8-567] referenced signal 'bDot_BCD' should be on the sensitivity list [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:60]
+WARNING: [Synth 8-567] referenced signal 'aDot_BCD' should be on the sensitivity list [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:60]
+INFO: [Synth 8-6155] done synthesizing module 'displayDec' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:3]
+WARNING: [Synth 8-7071] port 'led' of module 'displayDec' is unconnected for instance 'display_calc' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:83]
+WARNING: [Synth 8-7023] instance 'display_calc' of module 'displayDec' has 11 connections declared, but only 10 given [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:83]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:170]
+INFO: [Synth 8-226] default block is never used [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:357]
+INFO: [Synth 8-6155] done synthesizing module 'BasicCalculator' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:26]
+WARNING: [Synth 8-7071] port 'sign' of module 'BasicCalculator' is unconnected for instance 'basic_calc_inst' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:135]
+WARNING: [Synth 8-7023] instance 'basic_calc_inst' of module 'BasicCalculator' has 15 connections declared, but only 14 given [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:135]
+INFO: [Synth 8-6157] synthesizing module 'Logi' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/Logi.v:22]
+INFO: [Synth 8-6157] synthesizing module 'button_debounce' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/Logi.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'button_debounce' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/Logi.v:1]
+INFO: [Synth 8-6157] synthesizing module 'displayBin' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/displayBin.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'displayBin' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/displayBin.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'Logi' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/Logi.v:22]
+INFO: [Synth 8-6157] synthesizing module 'AgeCalculator' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/AGE.v:26]
+INFO: [Synth 8-6157] synthesizing module 'button_debounce_age' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/AGE.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'button_debounce_age' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/AGE.v:4]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/AGE.v:174]
+INFO: [Synth 8-6155] done synthesizing module 'AgeCalculator' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/AGE.v:26]
+INFO: [Synth 8-6157] synthesizing module 'Sci' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/sci.v:25]
+INFO: [Synth 8-6157] synthesizing module 'button_debounce_sci' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/sci.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'button_debounce_sci' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/sci.v:3]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/sci.v:168]
+INFO: [Synth 8-6155] done synthesizing module 'Sci' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/sci.v:25]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:2]
+WARNING: [Synth 8-3848] Net debounce in module/entity displayDec does not have driver. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/display.v:22]
+WARNING: [Synth 8-6014] Unused sequential element bin2_reg was removed.  [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/Logi.v:123]
+WARNING: [Synth 8-6014] Unused sequential element calculated_age_reg was removed.  [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/AGE.v:147]
+WARNING: [Synth 8-6014] Unused sequential element btnC_prev_reg was removed.  [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:54]
+WARNING: [Synth 8-3848] Net seg_disp in module/entity top does not have driver. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:19]
+WARNING: [Synth 8-3848] Net dpFlag in module/entity top does not have driver. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:18]
+WARNING: [Synth 8-3848] Net an_disp in module/entity top does not have driver. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:20]
+WARNING: [Synth 8-3848] Net dp_disp in module/entity top does not have driver. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/top.v:21]
+WARNING: [Synth 8-7129] Port dpFlag in module displayDec is either unconnected or has no load
+WARNING: [Synth 8-7129] Port clk in module displayBin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port btnL in module displayBin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port btnR in module displayBin is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:07 . Memory (MB): peak = 1490.691 ; gain = 556.230
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1527.996 ; gain = 592.602
 ---------------------------------------------------------------------------------
-RTL Elaboration failed
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1527.996 ; gain = 592.602
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1527.996 ; gain = 592.602
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.034 . Memory (MB): peak = 1527.996 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc]
+WARNING: [Vivado 12-584] No ports matched 'sw[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:12]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:12]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:13]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:13]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:14]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:14]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:16]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:16]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:17]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:17]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:18]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:18]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:19]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:19]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:20]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:20]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:21]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:21]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:22]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:22]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:23]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:23]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:24]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:24]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:25]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:25]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:26]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:26]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:27]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:27]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[8]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:28]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:28]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[8]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:29]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:29]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[9]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:30]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:30]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[9]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:31]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:31]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[10]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:32]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:32]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[10]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:33]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:33]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[11]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:34]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:34]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[11]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:35]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:35]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[12]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:36]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:36]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[12]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:37]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:37]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[13]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:38]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:38]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[13]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:39]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:39]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[14]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:40]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:40]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[14]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:41]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:41]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[15]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:42]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:42]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'sw[15]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:43]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:43]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:126]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:126]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:127]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:127]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:129]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:129]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:130]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:130]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:132]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:132]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:133]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:133]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:135]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:135]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:136]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:136]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:138]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:138]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:139]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:139]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:141]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:141]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:142]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:142]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:144]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:144]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:145]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:145]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:147]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:147]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JA[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:148]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:148]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:154]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:154]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:155]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:155]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:157]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:157]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:158]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:158]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:160]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:160]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:161]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:161]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:163]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:163]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:164]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:164]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:166]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:166]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:167]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:167]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:169]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:169]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:170]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:170]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:172]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:172]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:173]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:173]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:175]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:175]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JB[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:176]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:176]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:182]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:182]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:183]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:183]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:185]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:185]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:186]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:186]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:188]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:188]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:189]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:189]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:191]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:191]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:192]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:192]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:194]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:194]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:195]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:195]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:197]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:197]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:198]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:198]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:200]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:200]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:201]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:201]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:203]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:203]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JC[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:204]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:204]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:209]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:209]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:210]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:210]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:212]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:212]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:213]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:213]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:215]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:215]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[2]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:216]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:216]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:218]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:218]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[3]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:219]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:219]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:221]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:221]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[4]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:222]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:222]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:224]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:224]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[5]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:225]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:225]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:227]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:227]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[6]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:228]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:228]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:230]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:230]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'JXADC[7]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:231]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:231]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vgaRed[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:236]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:236]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vgaRed[0]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:237]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:237]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vgaRed[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:238]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:238]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'vgaRed[1]'. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:239]
+INFO: [Common 17-14] Message 'Vivado 12-584' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:239]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc:239]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+Finished Parsing XDC File [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/constrs_1/imports/calculator/basys_calculator_proj.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1634.109 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1634.109 ; gain = 0.000
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 1634.109 ; gain = 698.715
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 1634.109 ; gain = 698.715
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:04 ; elapsed = 00:00:11 . Memory (MB): peak = 1634.109 ; gain = 698.715
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'BasicCalculator'
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'Logi'
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'AgeCalculator'
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'Sci'
+WARNING: [Synth 8-327] inferring latch for variable 'Unit_reg' [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/BCD_UNIT.v:61]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+        STATE_INPUT_NUM1 |                            00001 |                              000
+          STATE_INPUT_OP |                            00010 |                              001
+        STATE_INPUT_NUM2 |                            00100 |                              010
+         STATE_CALCULATE |                            01000 |                              011
+           STATE_DISPLAY |                            10000 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'one-hot' in module 'BasicCalculator'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+            STATE_INPUT1 |                               00 |                               00
+          STATE_INPUT_OP |                               01 |                               01
+            STATE_INPUT2 |                               10 |                               10
+           STATE_DISPLAY |                               11 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'sequential' in module 'Logi'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+             STATE_INPUT |                              001 |                               00
+         STATE_CALCULATE |                              010 |                               01
+           STATE_DISPLAY |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'one-hot' in module 'AgeCalculator'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+          STATE_FUNC_SEL |                              001 |                               00
+             STATE_INPUT |                              010 |                               01
+            STATE_RESULT |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'one-hot' in module 'Sci'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:13 . Memory (MB): peak = 1634.109 ; gain = 698.715
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 2     
+	   2 Input   29 Bit       Adders := 3     
+	   3 Input   29 Bit       Adders := 1     
+	   2 Input   28 Bit       Adders := 1     
+	   2 Input   16 Bit       Adders := 2     
+	   4 Input   16 Bit       Adders := 2     
+	   2 Input    5 Bit       Adders := 2     
+	   2 Input    4 Bit       Adders := 302   
+	   2 Input    3 Bit       Adders := 4     
+	   2 Input    2 Bit       Adders := 18    
++---XORs : 
+	   2 Input      4 Bit         XORs := 1     
++---Registers : 
+	               48 Bit    Registers := 2     
+	               29 Bit    Registers := 7     
+	               28 Bit    Registers := 1     
+	               18 Bit    Registers := 1     
+	               16 Bit    Registers := 2     
+	               13 Bit    Registers := 3     
+	                8 Bit    Registers := 3     
+	                7 Bit    Registers := 7     
+	                4 Bit    Registers := 23    
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 13    
+	                1 Bit    Registers := 86    
++---Muxes : 
+	   4 Input   29 Bit        Muxes := 1     
+	   2 Input   29 Bit        Muxes := 5     
+	   5 Input   29 Bit        Muxes := 4     
+	   3 Input   29 Bit        Muxes := 3     
+	   2 Input   16 Bit        Muxes := 9     
+	   4 Input   16 Bit        Muxes := 5     
+	   3 Input   16 Bit        Muxes := 3     
+	   3 Input    8 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 3     
+	   7 Input    7 Bit        Muxes := 4     
+	   4 Input    7 Bit        Muxes := 6     
+	   2 Input    7 Bit        Muxes := 4     
+	   8 Input    7 Bit        Muxes := 3     
+	   6 Input    7 Bit        Muxes := 2     
+	   3 Input    7 Bit        Muxes := 2     
+	   4 Input    4 Bit        Muxes := 15    
+	   2 Input    4 Bit        Muxes := 336   
+	   5 Input    4 Bit        Muxes := 4     
+	   3 Input    4 Bit        Muxes := 5     
+	   6 Input    4 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 15    
+	   2 Input    2 Bit        Muxes := 21    
+	   5 Input    2 Bit        Muxes := 2     
+	   4 Input    2 Bit        Muxes := 1     
+	   3 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 83    
+	   7 Input    1 Bit        Muxes := 2     
+	   6 Input    1 Bit        Muxes := 7     
+	   4 Input    1 Bit        Muxes := 9     
+	   5 Input    1 Bit        Muxes := 18    
+	   3 Input    1 Bit        Muxes := 16    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3936] Found unconnected internal register 'decoder_out_reg' and it is trimmed from '48' to '12' bits. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:200]
+WARNING: [Synth 8-3936] Found unconnected internal register 'decoder_out_reg' and it is trimmed from '48' to '17' bits. [C:/Users/sosolitary/.Xilinx/calculator/calculator.srcs/sources_1/new/CALC.v:200]
+DSP Report: Generating DSP decoder_out0, operation Mode is: A*B.
+DSP Report: operator decoder_out0 is absorbed into DSP decoder_out0.
+DSP Report: operator decoder_out0 is absorbed into DSP decoder_out0.
+DSP Report: Generating DSP result0, operation Mode is: A2*B2.
+DSP Report: register num1_reg is absorbed into DSP result0.
+DSP Report: register result0 is absorbed into DSP result0.
+DSP Report: operator result0 is absorbed into DSP result0.
+DSP Report: operator result0 is absorbed into DSP result0.
+DSP Report: Generating DSP result0, operation Mode is: A2*B2.
+DSP Report: register result0 is absorbed into DSP result0.
+DSP Report: register result0 is absorbed into DSP result0.
+DSP Report: operator result0 is absorbed into DSP result0.
+DSP Report: operator result0 is absorbed into DSP result0.
+DSP Report: Generating DSP result0, operation Mode is: (PCIN>>17)+A2*B2.
+DSP Report: register num2_reg is absorbed into DSP result0.
+DSP Report: register result0 is absorbed into DSP result0.
+DSP Report: operator result0 is absorbed into DSP result0.
+DSP Report: operator result0 is absorbed into DSP result0.
+DSP Report: Generating DSP trig_calc3, operation Mode is: A*(B:0x13a).
+DSP Report: operator trig_calc3 is absorbed into DSP trig_calc3.
+WARNING: [Synth 8-7129] Port dpFlag in module displayDec is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:14 ; elapsed = 00:00:36 . Memory (MB): peak = 1634.109 ; gain = 698.715
+---------------------------------------------------------------------------------
+ Sort Area is  result0_2 : 0 0 : 2737 3855 : Used 1 time 0
+ Sort Area is  result0_2 : 0 1 : 1118 3855 : Used 1 time 0
+ Sort Area is  decoder_out0_0 : 0 0 : 2588 2588 : Used 1 time 0
+ Sort Area is  result0_5 : 0 0 : 1879 1879 : Used 1 time 0
+ Sort Area is  trig_calc3_7 : 0 0 : 434 434 : Used 1 time 0
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++----------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name     | DSP Mapping      | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++----------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|BasicCalculator | A*B              | 18     | 17     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|BasicCalculator | A2*B2            | 18     | 13     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|BasicCalculator | A2*B2            | 18     | 18     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|BasicCalculator | (PCIN>>17)+A2*B2 | 12     | 12     | -      | -      | 12     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Sci             | A*(B:0x13a)      | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++----------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:17 ; elapsed = 00:00:42 . Memory (MB): peak = 1634.109 ; gain = 698.715
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:47 . Memory (MB): peak = 1645.633 ; gain = 710.238
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:49 . Memory (MB): peak = 1784.043 ; gain = 848.648
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++----------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name     | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++----------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|BasicCalculator | A*B            | 17     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|BasicCalculator | A'*B'          | 17     | 12     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|BasicCalculator | A'*B'          | 17     | 17     | -      | -      | 48     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|BasicCalculator | PCIN>>17+A'*B' | 12     | 12     | -      | -      | 12     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|Sci             | A*B            | 16     | 9      | -      | -      | 25     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++----------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |BUFG    |     2|
+|2     |CARRY4  |   521|
+|3     |DSP48E1 |     5|
+|5     |LUT1    |   126|
+|6     |LUT2    |   425|
+|7     |LUT3    |  1062|
+|8     |LUT4    |   241|
+|9     |LUT5    |   301|
+|10    |LUT6    |   806|
+|11    |MUXF7   |    19|
+|12    |MUXF8   |     1|
+|13    |FDRE    |   976|
+|14    |FDSE    |    12|
+|15    |LD      |     8|
+|16    |IBUF    |     6|
+|17    |OBUF    |    28|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:21 ; elapsed = 00:00:52 . Memory (MB): peak = 1798.754 ; gain = 863.359
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 5 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:19 ; elapsed = 00:00:51 . Memory (MB): peak = 1798.754 ; gain = 757.246
+Synthesis Optimization Complete : Time (s): cpu = 00:00:21 ; elapsed = 00:00:53 . Memory (MB): peak = 1798.754 ; gain = 863.359
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.033 . Memory (MB): peak = 1798.754 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 554 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1798.754 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 8 instances were transformed.
+  LD => LDCE: 8 instances
+
+Synth Design complete | Checksum: 3e040ea5
 INFO: [Common 17-83] Releasing license: Synthesis
-15 Infos, 0 Warnings, 0 Critical Warnings and 3 Errors encountered.
-synth_design failed
-ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
-INFO: [Common 17-206] Exiting Vivado at Sat Dec  7 13:18:46 2024...
+63 Infos, 125 Warnings, 100 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:23 ; elapsed = 00:00:57 . Memory (MB): peak = 1798.754 ; gain = 1263.480
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1798.754 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/sosolitary/.Xilinx/calculator/calculator.runs/synth_1/top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon Dec  9 05:51:13 2024...

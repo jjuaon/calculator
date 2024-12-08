@@ -1,0 +1,141 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Mon Dec  9 05:52:18 2024
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7a35t
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    63 |
+|    Minimum number of control sets                        |    63 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |   220 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    63 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |    22 |
+| >= 6 to < 8        |     2 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     3 |
+| >= 12 to < 14      |     1 |
+| >= 14 to < 16      |     1 |
+| >= 16              |    33 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |             128 |           52 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              82 |           35 |
+| Yes          | No                    | No                     |              82 |           27 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             704 |          249 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++-----------------------------------------------------------------+----------------------------------------------------------------+---------------------------------------------------------+------------------+----------------+--------------+
+|                           Clock Signal                          |                          Enable Signal                         |                     Set/Reset Signal                    | Slice Load Count | Bel Load Count | Bels / Slice |
++-----------------------------------------------------------------+----------------------------------------------------------------+---------------------------------------------------------+------------------+----------------+--------------+
+|  gen_rr/CLK                                                     |                                                                |                                                         |                1 |              2 |         2.00 |
+|  age_calc_inst/display_age/bcd_unit_inst/Unit_reg[3]_i_2__0_n_0 |                                                                |                                                         |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/current_digit_reg[0][0]                | main_inst/return_signal_delay_reg                       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnD/FSM_onehot_current_state_reg[0]_0[0]     | main_inst/return_signal_delay_reg_0[0]                  |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/current_digit_reg[0]_0[0]              | main_inst/return_signal_delay_reg                       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnC/E[0]                                     | main_inst/return_signal_delay_reg_1                     |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnD/FSM_onehot_current_state_reg[0]_1[0]     | main_inst/return_signal_delay_reg_0[0]                  |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnC/E[2]                                     | main_inst/return_signal_delay_reg_1                     |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/display_age/bcd_unit_inst/E[0]                   |                                                         |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnC/E[1]                                     | main_inst/return_signal_delay_reg_1                     |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnD/E[0]                                     | main_inst/return_signal_delay_reg_0[0]                  |                4 |              4 |         1.00 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnD/FSM_onehot_current_state_reg[0][0]       | main_inst/return_signal_delay_reg_0[0]                  |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnC/E[3]                                     | main_inst/return_signal_delay_reg_1                     |                3 |              4 |         1.33 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/current_digit_reg[1][0]                | main_inst/return_signal_delay_reg                       |                1 |              4 |         4.00 |
+|  basic_calc_inst/display_calc/bcd_unit_inst/Unit_reg[3]_i_2_n_0 |                                                                |                                                         |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnC/E[0]                                   | main_inst/SR[0]                                         |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnC/FSM_sequential_current_state_reg[1][0] | main_inst/SR[0]                                         |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnD/E[0]                                   | main_inst/return_signal_delay_reg                       |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/display_calc/bcd_unit_inst/E[0]                |                                                         |                2 |              4 |         2.00 |
+|  rr_BUFG                                                        |                                                                | age_calc_inst/display_age/refresh_counter[3]_i_1__0_n_0 |                3 |              4 |         1.33 |
+|  rr_BUFG                                                        |                                                                | basic_calc_inst/display_calc/refresh_counter[3]_i_1_n_0 |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/E[0]                                   | main_inst/return_signal_delay_reg                       |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG                                                  | main_inst/enAge0_in                                            | main_inst/char_map[2][0]_i_1_n_0                        |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG                                                  | rr_BUFG                                                        | main_inst/return_signal_delay_reg_1                     |                4 |              6 |         1.50 |
+|  clk_IBUF_BUFG                                                  |                                                                | main_inst/return_signal_delay_reg_1                     |                3 |              7 |         2.33 |
+|  clk_IBUF_BUFG                                                  |                                                                | main_inst/return_signal_delay_reg_0[0]                  |                5 |             11 |         2.20 |
+|  clk_IBUF_BUFG                                                  |                                                                | main_inst/return_signal_delay_reg                       |                7 |             11 |         1.57 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/seg[6]_i_1__1_n_0                                |                                                         |                6 |             11 |         1.83 |
+|  rr_BUFG                                                        |                                                                |                                                         |                3 |             13 |         4.33 |
+|  clk_IBUF_BUFG                                                  | rr_BUFG                                                        | main_inst/SR[0]                                         |                6 |             15 |         2.50 |
+|  clk_IBUF_BUFG                                                  | main_inst/E[0]                                                 |                                                         |                4 |             16 |         4.00 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnC/FSM_onehot_current_state_reg[1][0]       | main_inst/return_signal_delay_reg_1                     |                6 |             16 |         2.67 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnC/E[0]                                     | main_inst/return_signal_delay_reg_0[0]                  |                5 |             16 |         3.20 |
+|  clk_IBUF_BUFG                                                  |                                                                | main_inst/SR[0]                                         |                7 |             17 |         2.43 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnC/FSM_onehot_current_state_reg[0][0]       | main_inst/return_signal_delay_reg_0[0]                  |                3 |             17 |         5.67 |
+|  clk_IBUF_BUFG                                                  | main_inst/char_map                                             |                                                         |                4 |             18 |         4.50 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnD/debounce_counter[0]_i_2__0_n_0         | basic_calc_inst/db_btnD/debounce_counter[0]_i_1__0_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/debounce_counter[0]_i_2__3_n_0         | basic_calc_inst/db_btnC/debounce_counter[0]_i_1__3_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnL/debounce_counter[0]_i_2__11_n_0          | age_calc_inst/db_btnL/debounce_counter[0]_i_1__11_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnR/debounce_counter[0]_i_2__2_n_0         | basic_calc_inst/db_btnR/debounce_counter[0]_i_1__2_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnU/debounce_counter[0]_i_2_n_0            | basic_calc_inst/db_btnU/debounce_counter[0]_i_1_n_0     |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnU/debounce_counter[0]_i_2__4_n_0         | logic_calc_inst/db_btnU/debounce_counter[0]_i_1__4_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnC/debounce_counter[0]_i_2__13_n_0          | age_calc_inst/db_btnC/debounce_counter[0]_i_1__13_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnD/debounce_counter[0]_i_2__10_n_0          | age_calc_inst/db_btnD/debounce_counter[0]_i_1__10_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnR/debounce_counter[0]_i_2__12_n_0          | age_calc_inst/db_btnR/debounce_counter[0]_i_1__12_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnD/debounce_counter[0]_i_2__5_n_0         | logic_calc_inst/db_btnD/debounce_counter[0]_i_1__5_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnL/debounce_counter[0]_i_2__6_n_0         | logic_calc_inst/db_btnL/debounce_counter[0]_i_1__6_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnR/debounce_counter[0]_i_2__7_n_0         | logic_calc_inst/db_btnR/debounce_counter[0]_i_1__7_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | age_calc_inst/db_btnU/debounce_counter[0]_i_2__9_n_0           | age_calc_inst/db_btnU/debounce_counter[0]_i_1__9_n_0    |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnC/debounce_counter[0]_i_2__18_n_0          | sci_calc_inst/db_btnC/debounce_counter[0]_i_1__18_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | logic_calc_inst/db_btnC/debounce_counter[0]_i_2__8_n_0         | logic_calc_inst/db_btnC/debounce_counter[0]_i_1__8_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnD/debounce_counter[0]_i_2__15_n_0          | sci_calc_inst/db_btnD/debounce_counter[0]_i_1__15_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnL/debounce_counter[0]_i_2__16_n_0          | sci_calc_inst/db_btnL/debounce_counter[0]_i_1__16_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnR/debounce_counter[0]_i_2__17_n_0          | sci_calc_inst/db_btnR/debounce_counter[0]_i_1__17_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | sci_calc_inst/db_btnU/debounce_counter[0]_i_2__14_n_0          | sci_calc_inst/db_btnU/debounce_counter[0]_i_1__14_n_0   |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnL/debounce_counter[0]_i_2__1_n_0         | basic_calc_inst/db_btnL/debounce_counter[0]_i_1__1_n_0  |                6 |             21 |         3.50 |
+|  clk_IBUF_BUFG                                                  |                                                                | rr_BUFG                                                 |                8 |             28 |         3.50 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/num10                                  | main_inst/return_signal_delay_reg                       |               21 |             29 |         1.38 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/db_btnC/num20                                  | main_inst/return_signal_delay_reg                       |               16 |             29 |         1.81 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/decoder_out[16]_i_1_n_0                        |                                                         |               10 |             29 |         2.90 |
+|  clk_IBUF_BUFG                                                  | main_inst/btnC0                                                | main_inst/btnC_counter                                  |                8 |             32 |         4.00 |
+|  clk_IBUF_BUFG                                                  | basic_calc_inst/result[28]_i_1_n_0                             | main_inst/return_signal_delay_reg                       |               29 |             58 |         2.00 |
+|  clk_IBUF_BUFG                                                  |                                                                |                                                         |               44 |            105 |         2.39 |
++-----------------------------------------------------------------+----------------------------------------------------------------+---------------------------------------------------------+------------------+----------------+--------------+
+
+
