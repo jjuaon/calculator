@@ -28,10 +28,6 @@ module AgeCalculator(
             end
             dpFlag <= 1;
         end 
-//        else begin
-//            bDot = {1'b0, 28'd98778943};
-//            aDot = 8'd0;
-//        end
     end
     
 endmodule
