@@ -1,60 +1,49 @@
 `timescale 1ns / 1ps
 
 module test_display(
-    input clk, btnL, btnR, btnC,             
-    output [6:0] seg,
-    output [3:0] an,
-    output [15:0] led,
-    output dp
+    input clk,               // System clock
+    input btnL,             // Left button
+    input btnR,             // Right button
+    input btnC,             // Center button
+    input btnU,             // Up button
+    input btnD,             // Down button
+    output [6:0] seg,       // 7-segment display segments
+    output [3:0] an,        // 7-segment display anodes
+    output [15:0] led       // LED display
 );
-
-    reg [31:0] btnC_counter = 0;
-    reg btnC_state = 0; 
-    reg reset_flag = 0;
-    reg en = 1; // Enable signal for display modules
-    reg [15:0] mode_data = 16'd0; // Data to be displayed based on the mode
-
-    wire [28:0] bDot;
-    wire [7:0] aDot;
-    SegRefreshRate gen_rr(clk,rr);
-
-    always @(posedge clk) begin
-        if (btnC) begin
-            if (btnC_state == 0) begin
-                btnC_state <= 1; // btnC is now pressed
-                btnC_counter <= 0; // Reset counter on new press
-            end else begin
-                btnC_counter <= btnC_counter + 1; // Increment counter while pressed
-            end
-        end else begin
-            btnC_state <= 0; // btnC is released
-            btnC_counter <= 0; // Reset counter on release
-        end
-
-        if (btnC_state == 1 && btnC_counter >= 120000000) begin // Adjust for your clock frequency
-            reset_flag <= 1;
-        end else begin
-            reset_flag <= 0;
-        end
+    // Internal wires
+    wire refresh_rate;
+    wire [3:0] result_bin;
+    wire return_to_main;    
+    
+    // Reset any outputs that might need default values
+    reg rst = 0;
+    initial begin
+        rst = 1;
+        #100 rst = 0;
     end
-
-    // Binary values for the display
-    assign bDot = {1'b1, 28'd98778943};
-    assign aDot = 8'd25;
-
-    // Instantiate the displayDec module
-    displayDec(
-        .en(en), 
-        .clk(clk), 
-        .rr(rr), 
-        .btnL(btnL), 
-        .btnR(btnR), 
-        .bDot(bDot), 
-        .aDot(aDot), 
-        .seg(seg), 
-        .an(an), 
-        .led(led), 
-        .dp(dp)
+    
+    // Refresh rate generator
+    SegRefreshRate refresh_gen(
+        .clk(clk),
+        .clk_out(refresh_rate)
     );
+    
+    // Instantiate Logic module (renamed from Logi)
+    Logi logic_unit(
+        .enLogi(1'b1),      // Change back to enLogi to match the module definition
+        .rr(refresh_rate),
+        .clk(clk),
+        .btnU(btnU),
+        .btnD(btnD),
+        .btnL(btnL),
+        .btnR(btnR),
+        .btnC(btnC),
+        .seg(seg),
+        .an(an),
+        .Out(result_bin),
+        .return_to_main(return_to_main)
+    );
+        assign led = {12'b0, result_bin};
 
 endmodule

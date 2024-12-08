@@ -17,7 +17,6 @@ module BCD_UNIT(
 
     // Handle sign bit and absolute value
     always @(*) begin
-        // Extract sign bit (29th bit)
         sign = bDot[28];
         
         // Take absolute value if negative
