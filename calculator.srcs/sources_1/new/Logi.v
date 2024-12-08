@@ -3,11 +3,6 @@ module button_debounce(
     input btn_in,
     output reg btn_out
 );
-    // For 100MHz clock, we want about 20ms debounce time
-    // 100MHz = 100,000,000 cycles per second
-    // 20ms = 0.02 seconds
-    // 100,000,000 * 0.02 = 2,000,000 cycles needed
-    // We need 21 bits to represent 2,000,000 (2^21 = 2,097,152)
     reg [20:0] debounce_counter = 0;
     reg btn_prev = 0;
     
@@ -24,32 +19,32 @@ module button_debounce(
         end
     end
 endmodule
-
-`timescale 1ns / 1ps
 module Logi(
-    input rr,                 // External refresh rate input
-    input clk,                // Clock input
-    input btnU,               // Increment button
-    input btnD,               // Decrement button
-    input btnL,               // Move to the next digit
-    input btnR,               // Move to the previous digit
-    input btnC,               // Save or confirm input
-    output reg [6:0] seg,     // 7-segment display outputs
-    output reg [3:0] an,      // Enable signals for 4-digit display
-    output reg [3:0] Out      // Result of the operation
+    input enLogi,            
+    input rr,                
+    input clk,               
+    input btnU,              
+    input btnD,              
+    input btnL,              
+    input btnR,              
+    input btnC,              
+    output reg [6:0] seg,    
+    output reg [3:0] an,     
+    output reg return_to_main,
+    output reg [3:0] Out     
 );
     // State definitions
-    localparam STATE_INPUT1 = 3'd0;
-    localparam STATE_INPUT_OP = 3'd1;
-    localparam STATE_INPUT2 = 3'd2;
-    localparam STATE_COMPUTE = 3'd3;
-    localparam STATE_SHOW_RESULT = 3'd4;
+    localparam STATE_INPUT1 = 2'd0;
+    localparam STATE_INPUT_OP = 2'd1;
+    localparam STATE_INPUT2 = 2'd2;
+    localparam STATE_DISPLAY = 2'd3;
 
     // Operation definitions
-    localparam OP_AND = 2'd0;
-    localparam OP_OR = 2'd1;
-    localparam OP_XOR = 2'd2;
-    localparam OP_NOT = 2'd3;
+    localparam OP_AND = 3'd0;
+    localparam OP_OR = 3'd1;
+    localparam OP_NOR = 3'd2;
+    localparam OP_NAND = 3'd3;
+    localparam OP_XOR = 3'd4;
 
     // Button debouncing
     wire btnU_db, btnD_db, btnL_db, btnR_db, btnC_db;
@@ -60,130 +55,229 @@ module Logi(
     button_debounce db_btnR(.clk(clk), .btn_in(btnR), .btn_out(btnR_db));
     button_debounce db_btnC(.clk(clk), .btn_in(btnC), .btn_out(btnC_db));
 
-    reg [2:0] current_state = STATE_INPUT1;
-    reg [1:0] selected_op = OP_AND;
-    wire [3:0] bin1, bin2;
-    wire [6:0] seg_bin1, seg_bin2;
-    wire [3:0] an_bin1, an_bin2;
+    // State and operation tracking
+    reg [1:0] current_state = STATE_INPUT1;
+    reg [2:0] selected_op = OP_AND;
     
-    // Digit selection counter - now triggered by rr
-    reg [1:0] digit_select = 0;
-    always @(posedge clk) begin
-        if (rr) begin
-            digit_select <= digit_select + 1;
-        end
-    end
+    // Input1 related registers
+    reg [3:0] current_value1 = 4'b0000;
+    reg [1:0] digit_pos1 = 2'b00;
+    reg [3:0] bin1 = 4'b0000;
     
-    // Instantiate insertBin modules
-    insertBin bin_input1(
+    // Input2 related registers
+    reg [3:0] current_value2 = 4'b0000;
+    reg [1:0] digit_pos2 = 2'b00;
+    reg [3:0] bin2 = 4'b0000;
+    
+    // Common display multiplexing register
+    reg [1:0] display_pos = 2'b00;
+    
+    // Button state tracking
+    reg btnU_prev = 0;
+    reg btnD_prev = 0;
+    reg btnL_prev = 0;
+    reg btnR_prev = 0;
+    reg btnC_prev = 0;
+    
+    // Edge detection
+    wire btnC_posedge = (btnC_db && !btnC_prev);
+    wire btnC_negedge = (!btnC_db && btnC_prev);
+    
+    // Display module for result
+    wire [6:0] seg_display;
+    wire [3:0] an_display;
+    
+    displayBin result_display(
+        .rr(rr & enLogi),
         .clk(clk),
-        .rr(rr),
-        .btnU(current_state == STATE_INPUT1 ? btnU_db : 1'b0),
-        .btnD(current_state == STATE_INPUT1 ? btnD_db : 1'b0),
-        .btnL(current_state == STATE_INPUT1 ? btnL_db : 1'b0),
-        .btnR(current_state == STATE_INPUT1 ? btnR_db : 1'b0),
-        .btnC(current_state == STATE_INPUT1 ? btnC_db : 1'b0),
-        .bin(bin1),
-        .seg_out(seg_bin1),
-        .an_out(an_bin1)
-    );
-    
-    insertBin bin_input2(
-        .clk(clk),
-        .rr(rr),
-        .btnU(current_state == STATE_INPUT2 ? btnU_db : 1'b0),
-        .btnD(current_state == STATE_INPUT2 ? btnD_db : 1'b0),
-        .btnL(current_state == STATE_INPUT2 ? btnL_db : 1'b0),
-        .btnR(current_state == STATE_INPUT2 ? btnR_db : 1'b0),
-        .btnC(current_state == STATE_INPUT2 ? btnC_db : 1'b0),
-        .bin(bin2),
-        .seg_out(seg_bin2),
-        .an_out(an_bin2)
+        .btnL(btnL_db),
+        .btnR(btnR_db),
+        .bDot(Out),
+        .seg(seg_display),
+        .an(an_display)
     );
 
     // Operation display patterns
-    reg [27:0] op_display;
+    reg [6:0] op_display;
     always @(*) begin
         case(selected_op)
-            OP_AND: op_display = 28'b0001000_0101011_0101011_1111110;  // "And"
-            OP_OR:  op_display = 28'b1111111_0101111_1111110_1111111;  // "Or"
-            OP_XOR: op_display = 28'b0001001_0101111_1111110_1111111;  // "XOr"
-            OP_NOT: op_display = 28'b0101011_0001111_0000111_1111111;  // "not"
+            OP_AND:  op_display = 7'b0001000;  // "A"
+            OP_OR:   op_display = 7'b1000000;  // "O"
+            OP_NOR:  op_display = 7'b0101111;  // "r"
+            OP_NAND: op_display = 7'b0100001;  // "d"
+            OP_XOR:  op_display = 7'b0000110;  // "E"
+            default: op_display = 7'b1111111;  // Blank
         endcase
     end
 
-    // Display control logic
+    // Main state machine and input handling
     always @(posedge clk) begin
-        if (rr) begin  // Only update display on refresh rate pulse
+        if (!enLogi) begin
+            // Reset all state
+            current_state <= STATE_INPUT1;
+            current_value1 <= 4'b0000;
+            current_value2 <= 4'b0000;
+            digit_pos1 <= 2'b00;
+            digit_pos2 <= 2'b00;
+            bin1 <= 4'b0000;
+            bin2 <= 4'b0000;
+            selected_op <= OP_AND;
+            Out <= 4'b0000;
+            return_to_main <= 0;
+            seg <= 7'b1111111;
+            an <= 4'b1111;
+            btnU_prev <= 0;
+            btnD_prev <= 0;
+            btnL_prev <= 0;
+            btnR_prev <= 0;
+            btnC_prev <= 0;
+        end
+        else if (rr) begin
+            // Update display position for multiplexing
+            display_pos <= display_pos + 1;
+            
+            // Update button previous states
+            btnU_prev <= btnU_db;
+            btnD_prev <= btnD_db;
+            btnL_prev <= btnL_db;
+            btnR_prev <= btnR_db;
+            btnC_prev <= btnC_db;
+            return_to_main <= 0;
+
             case (current_state)
                 STATE_INPUT1: begin
-                    seg <= seg_bin1;
-                    an <= an_bin1;
-                    if (btnC_db) begin
+                    // Handle input buttons for value1
+                    if (btnU_db && !btnU_prev) begin
+                        if (current_value1[digit_pos1] == 0)
+                            current_value1[digit_pos1] <= 1;
+                    end
+                    if (btnD_db && !btnD_prev) begin
+                        if (current_value1[digit_pos1] == 1)
+                            current_value1[digit_pos1] <= 0;
+                    end
+                    if (btnL_db && !btnL_prev) begin
+                        if (digit_pos1 < 2'b11)
+                            digit_pos1 <= digit_pos1 + 1;
+                    end
+                    if (btnR_db && !btnR_prev) begin
+                        if (digit_pos1 > 2'b00)
+                            digit_pos1 <= digit_pos1 - 1;
+                    end
+                    if (btnC_posedge) begin
+                        bin1 <= current_value1;
                         current_state <= STATE_INPUT_OP;
                     end
+                    
+                    // Display multiplexing for input1
+                    case (display_pos)
+                        2'b00: begin
+                            an <= 4'b1110;
+                            seg <= current_value1[0] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos1 == 2'b00)
+                                an <= rr ? 4'b1110 : 4'b1111;
+                        end
+                        2'b01: begin
+                            an <= 4'b1101;
+                            seg <= current_value1[1] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos1 == 2'b01)
+                                an <= rr ? 4'b1101 : 4'b1111;
+                        end
+                        2'b10: begin
+                            an <= 4'b1011;
+                            seg <= current_value1[2] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos1 == 2'b10)
+                                an <= rr ? 4'b1011 : 4'b1111;
+                        end
+                        2'b11: begin
+                            an <= 4'b0111;
+                            seg <= current_value1[3] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos1 == 2'b11)
+                                an <= rr ? 4'b0111 : 4'b1111;
+                        end
+                    endcase
                 end
 
                 STATE_INPUT_OP: begin
-                    case (digit_select)
-                        2'd0: begin seg <= op_display[6:0];   an <= 4'b1110; end
-                        2'd1: begin seg <= op_display[13:7];  an <= 4'b1101; end
-                        2'd2: begin seg <= op_display[20:14]; an <= 4'b1011; end
-                        2'd3: begin seg <= op_display[27:21]; an <= 4'b0111; end
-                    endcase
+                    seg <= op_display;
+                    an <= 4'b1110;
                     
-                    if (btnU_db && !btnD_db) begin
-                        selected_op <= (selected_op + 1) % 4;
+                    if (btnU_db && !btnU_prev) begin
+                        selected_op <= (selected_op == 3'd4) ? 3'd0 : selected_op + 1;
                     end
-                    else if (btnD_db && !btnU_db) begin
-                        selected_op <= (selected_op - 1) % 4;
+                    else if (btnD_db && !btnD_prev) begin
+                        selected_op <= (selected_op == 3'd0) ? 3'd4 : selected_op - 1;
                     end
-                    
-                    if (btnC_db) begin
-                        current_state <= (selected_op == OP_NOT) ? STATE_COMPUTE : STATE_INPUT2;
+                    else if (btnC_posedge) begin
+                        current_state <= STATE_INPUT2;
                     end
                 end
 
                 STATE_INPUT2: begin
-                    seg <= seg_bin2;
-                    an <= an_bin2;
-                    if (btnC_db) begin
-                        current_state <= STATE_COMPUTE;
+                    // Handle input buttons for value2
+                    if (btnU_db && !btnU_prev) begin
+                        if (current_value2[digit_pos2] == 0)
+                            current_value2[digit_pos2] <= 1;
                     end
-                end
-
-                STATE_COMPUTE: begin
-                    case (selected_op)
-                        OP_AND: Out <= bin1 & bin2;
-                        OP_OR:  Out <= bin1 | bin2;
-                        OP_XOR: Out <= bin1 ^ bin2;
-                        OP_NOT: Out <= ~bin1;
-                    endcase
-                    current_state <= STATE_SHOW_RESULT;
-                end
-
-                STATE_SHOW_RESULT: begin
-                    case (digit_select)
-                        2'd0: begin
-                            seg <= Out[0] ? 7'b1111001 : 7'b1111110;
-                            an <= 4'b1110;
-                        end
-                        2'd1: begin
-                            seg <= Out[1] ? 7'b1111001 : 7'b1111110;
-                            an <= 4'b1101;
-                        end
-                        2'd2: begin
-                            seg <= Out[2] ? 7'b1111001 : 7'b1111110;
-                            an <= 4'b1011;
-                        end
-                        2'd3: begin
-                            seg <= Out[3] ? 7'b1111001 : 7'b1111110;
-                            an <= 4'b0111;
-                        end
-                    endcase
+                    if (btnD_db && !btnD_prev) begin
+                        if (current_value2[digit_pos2] == 1)
+                            current_value2[digit_pos2] <= 0;
+                    end
+                    if (btnL_db && !btnL_prev) begin
+                        if (digit_pos2 < 2'b11)
+                            digit_pos2 <= digit_pos2 + 1;
+                    end
+                    if (btnR_db && !btnR_prev) begin
+                        if (digit_pos2 > 2'b00)
+                            digit_pos2 <= digit_pos2 - 1;
+                    end
+                    if (btnC_posedge) begin
+                        bin2 <= current_value2;
+                        case (selected_op)
+                            OP_AND:  Out <= bin1 & current_value2;
+                            OP_OR:   Out <= bin1 | current_value2;
+                            OP_NOR:  Out <= ~(bin1 | current_value2);
+                            OP_NAND: Out <= ~(bin1 & current_value2);
+                            OP_XOR:  Out <= bin1 ^ current_value2;
+                            default: Out <= 4'b0000;
+                        endcase
+                        current_state <= STATE_DISPLAY;
+                    end
                     
-                    if (btnC_db) begin
-                        current_state <= STATE_INPUT1;
+                    // Display multiplexing for input2
+                    case (display_pos)
+                        2'b00: begin
+                            an <= 4'b1110;
+                            seg <= current_value2[0] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos2 == 2'b00)
+                                an <= rr ? 4'b1110 : 4'b1111;
+                        end
+                        2'b01: begin
+                            an <= 4'b1101;
+                            seg <= current_value2[1] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos2 == 2'b01)
+                                an <= rr ? 4'b1101 : 4'b1111;
+                        end
+                        2'b10: begin
+                            an <= 4'b1011;
+                            seg <= current_value2[2] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos2 == 2'b10)
+                                an <= rr ? 4'b1011 : 4'b1111;
+                        end
+                        2'b11: begin
+                            an <= 4'b0111;
+                            seg <= current_value2[3] ? 7'b1111001 : 7'b1000000;
+                            if (digit_pos2 == 2'b11)
+                                an <= rr ? 4'b0111 : 4'b1111;
+                        end
+                    endcase
+                end
+
+                STATE_DISPLAY: begin
+                    seg <= seg_display;
+                    an <= an_display;
+                    
+                    if (btnC_posedge) begin
+                        return_to_main <= 1;
                     end
                 end
             endcase
