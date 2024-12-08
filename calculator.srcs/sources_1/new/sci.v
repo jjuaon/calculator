@@ -61,7 +61,7 @@ module Sci(
     reg [1:0] selected_func = FUNC_SIN;
     
     // Input related registers
-    reg [7:0] input_value = 8'd0;
+    reg [15:0] input_value = 16'd0;
     reg [1:0] current_digit = 2'b00;
     
     // Calculation result
@@ -81,13 +81,43 @@ module Sci(
     function [15:0] trig_calc;
         input [1:0] func;
         input [7:0] value;
+        reg [15:0] angle_rad; // Fixed-point representation of angle in radians
+        reg [15:0] result;
         begin
-            // Simple approximation - replace with more accurate calculation if needed
+            // Convert degrees to radians (crude approximation)
+            // π radians = 180 degrees
+            // Use fixed-point representation (multiplied by 256 for precision)
+            angle_rad = (value * 16'd256 * 16'd314) / (16'd180 * 16'd100);
+            
             case(func)
-                FUNC_SIN: trig_calc = (value * 16'd256) / 16'd360; // Simplified sin
-                FUNC_COS: trig_calc = ((90 - value) * 16'd256) / 16'd360; // Simplified cos
-                FUNC_TAN: trig_calc = (value * 16'd256) / 16'd180; // Simplified tan
-                default:  trig_calc = 16'd0;
+                FUNC_SIN: begin
+                    // Simplified sine approximation using first few terms of Taylor series
+                    // sin(x) ≈ x - x³/3! + x⁵/5! - x⁷/7!
+                    result = angle_rad - 
+                             ((angle_rad * angle_rad * angle_rad) / (16'd6)) + 
+                             ((angle_rad * angle_rad * angle_rad * angle_rad * angle_rad) / (16'd120)) -
+                             ((angle_rad * angle_rad * angle_rad * angle_rad * angle_rad * angle_rad * angle_rad) / (16'd5040));
+                    trig_calc = result;
+                end
+                
+                FUNC_COS: begin
+                    // Simplified cosine approximation
+                    // cos(x) ≈ 1 - x²/2! + x⁴/4! - x⁶/6!
+                    result = (16'd256) - 
+                             ((angle_rad * angle_rad) / (16'd2)) + 
+                             ((angle_rad * angle_rad * angle_rad * angle_rad) / (16'd24)) -
+                             ((angle_rad * angle_rad * angle_rad * angle_rad * angle_rad * angle_rad) / (16'd720));
+                    trig_calc = result;
+                end
+                
+                FUNC_TAN: begin
+                    // tan(x) = sin(x) / cos(x)
+                    // Simplified approximation
+                    result = (trig_calc(FUNC_SIN, value) * 16'd256) / trig_calc(FUNC_COS, value);
+                    trig_calc = result;
+                end
+                
+                default: trig_calc = 16'd0;
             endcase
         end
     endfunction
@@ -131,6 +161,9 @@ module Sci(
             btnR_prev <= btnR_db;
             btnC_prev <= btnC_db;
             return_to_main <= 0;
+            
+            // Update display position
+            display_pos <= display_pos + 1;
 
             case (current_state)
                 STATE_FUNC_SEL: begin
@@ -155,57 +188,232 @@ module Sci(
                 end
 
                 STATE_INPUT: begin
-                    // Handle digit input
+                    // Digit input logic for 4 digits
                     if (btnU_db && !btnU_prev) begin
-                        if (input_value[current_digit*2+:2] < 2'd3)
-                            input_value[current_digit*2+:2] <= input_value[current_digit*2+:2] + 1;
+                        case (current_digit)
+                            2'b00: begin // First digit (thousands)
+                                if (input_value[15:12] < 4'd9) 
+                                    input_value[15:12] <= input_value[15:12] + 1;
+                            end
+                            2'b01: begin // Second digit (hundreds)
+                                if (input_value[11:8] < 4'd9) 
+                                    input_value[11:8] <= input_value[11:8] + 1;
+                            end
+                            2'b10: begin // Third digit (tens)
+                                if (input_value[7:4] < 4'd9) 
+                                    input_value[7:4] <= input_value[7:4] + 1;
+                            end
+                            2'b11: begin // Fourth digit (ones)
+                                if (input_value[3:0] < 4'd9) 
+                                    input_value[3:0] <= input_value[3:0] + 1;
+                            end
+                        endcase
                     end
+                
                     if (btnD_db && !btnD_prev) begin
-                        if (input_value[current_digit*2+:2] > 2'd0)
-                            input_value[current_digit*2+:2] <= input_value[current_digit*2+:2] - 1;
+                        case (current_digit)
+                            2'b00: begin // First digit (thousands)
+                                if (input_value[15:12] > 4'd0) 
+                                    input_value[15:12] <= input_value[15:12] - 1;
+                            end
+                            2'b01: begin // Second digit (hundreds)
+                                if (input_value[11:8] > 4'd0) 
+                                    input_value[11:8] <= input_value[11:8] - 1;
+                            end
+                            2'b10: begin // Third digit (tens)
+                                if (input_value[7:4] > 4'd0) 
+                                    input_value[7:4] <= input_value[7:4] - 1;
+                            end
+                            2'b11: begin // Fourth digit (ones)
+                                if (input_value[3:0] > 4'd0) 
+                                    input_value[3:0] <= input_value[3:0] - 1;
+                            end
+                        endcase
                     end
-                    
-                    // Digit navigation with wrap-around
+                
+                    // Navigate between digits
                     if (btnL_db && !btnL_prev) begin
-                        current_digit <= (current_digit == 2'b11) ? 2'b00 : current_digit + 1;
+                        if (current_digit < 2'b11) 
+                            current_digit <= current_digit + 1;
+                        else 
+                            current_digit <= 2'b00;
                     end
+                
                     if (btnR_db && !btnR_prev) begin
-                        current_digit <= (current_digit == 2'b00) ? 2'b11 : current_digit - 1;
+                        if (current_digit > 2'b00) 
+                            current_digit <= current_digit - 1;
+                        else 
+                            current_digit <= 2'b11;
                     end
-
-                    // Simplified digit display logic
-                    seg <= (input_value[current_digit*2+:2] == 2'd0) ? 7'b1000000 : 
-                           (input_value[current_digit*2+:2] == 2'd1) ? 7'b1111001 :
-                           (input_value[current_digit*2+:2] == 2'd2) ? 7'b0100100 : 7'b0110000;
-                    
-                    // Dynamic anode selection based on current digit
-                    an <= 4'b1111;  // Initially disable all
-                    an[~current_digit] = 0;  // Enable current digit (note the bit inversion)
-
-                    // Transition to result with center button
-                    if (btnC_db && !btnC_prev) begin
-                        // Optional: Add input validation if needed
-                        if (input_value <= 8'd90) begin  // Limit input to 0-90 degrees
-                            calc_result <= trig_calc(selected_func, input_value);
-                            bDot <= {13'd0, calc_result};
-                            aDot <= 8'd0;
-                            current_state <= STATE_RESULT;
+                
+                    // Explicit display logic for input state
+                    case (display_pos)
+                        2'b00: begin
+                            // Display thousands digit
+                            case (input_value[15:12])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111;
+                            endcase
+                            an = 4'b0111; // Enable first digit from left
                         end
+                
+                        2'b01: begin
+                            // Display hundreds digit
+                            case (input_value[11:8])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111;
+                            endcase
+                            an = 4'b1011; // Enable second digit from left
+                        end
+                
+                        2'b10: begin
+                            // Display tens digit
+                            case (input_value[7:4])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111;
+                            endcase
+                            an = 4'b1101; // Enable third digit from left
+                        end
+                
+                        2'b11: begin
+                            // Display ones digit
+                            case (input_value[3:0])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111;
+                            endcase
+                            an = 4'b1110; // Enable fourth digit from left (rightmost)
+                        end
+                    endcase
+                
+                    // Transition to result state
+                    if (btnC_db && !btnC_prev) begin
+                        // Perform trigonometric calculation
+                        calc_result <= trig_calc(selected_func, input_value[7:0]);
+                        
+                        // Update display outputs
+                        bDot <= calc_result;
+                        aDot <= {4'd0, selected_func, 2'd0};
+                        
+                        // Move to result state
+                        current_state <= STATE_RESULT;
                     end
                 end
 
                 STATE_RESULT: begin
-                    // Display result
-                    seg <= (calc_result[3:0] == 4'd0) ? 7'b1000000 : 
-                           (calc_result[3:0] == 4'd1) ? 7'b1111001 :
-                           (calc_result[3:0] == 4'd2) ? 7'b0100100 : 7'b0110000;
-                    an <= 4'b1110;
-
-                    // Return to function selection or main menu
+                    // Display result based on display position
+                    case (display_pos)
+                        2'b00: begin
+                            // First digit (MSB)
+                            case (calc_result[15:12])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111; // Blank
+                            endcase
+                            an = 4'b0111; // First digit from left
+                        end
+                
+                        2'b01: begin
+                            // Second digit
+                            case (calc_result[11:8])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111; // Blank
+                            endcase
+                            an = 4'b1011; // Second digit from left
+                        end
+                
+                        2'b10: begin
+                            // Third digit
+                            case (calc_result[7:4])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111; // Blank
+                            endcase
+                            an = 4'b1101; // Third digit from left
+                        end
+                
+                        2'b11: begin
+                            // Fourth digit (LSB)
+                            case (calc_result[3:0])
+                                4'd0: seg = 7'b1000000; // 0
+                                4'd1: seg = 7'b1111001; // 1
+                                4'd2: seg = 7'b0100100; // 2
+                                4'd3: seg = 7'b0110000; // 3
+                                4'd4: seg = 7'b0011001; // 4
+                                4'd5: seg = 7'b0010010; // 5
+                                4'd6: seg = 7'b0000010; // 6
+                                4'd7: seg = 7'b1111000; // 7
+                                4'd8: seg = 7'b0000000; // 8
+                                4'd9: seg = 7'b0010000; // 9
+                                default: seg = 7'b1111111; // Blank
+                            endcase
+                            an = 4'b1110; // Fourth digit from left (rightmost)
+                        end
+                    endcase
+                
+                    // Add return to function selection state logic
                     if (btnC_db && !btnC_prev) begin
-                        return_to_main <= 1;
                         current_state <= STATE_FUNC_SEL;
-                        input_value <= 8'd0;
                         calc_result <= 16'd0;
                         bDot <= 29'd0;
                         aDot <= 8'd0;
